@@ -1,3 +1,14 @@
+<?php
+  require "koneksi.php";
+
+  $query= "SELECT * FROM tb_siswa";
+  $sql = mysqli_query($conn, $query);
+
+  
+  $no = 0;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +37,10 @@
             CRUD <cite title="Source Title">Create Read Update dan Delete</cite>
           </figcaption>
         </figure>  
-        <button type="button" class="btn btn-primary mb-3"><i class="fa fa-plus"> </i>Tambah Data</button>
+        <a href="kelola.php" type="button" class="btn btn-primary mb-3">
+          <i class="fa fa-plus"> </i>
+          Tambah Data
+        </a>
             <div class="table-responsive">
                 <table class="table align-middle table-bordered  table-hover">
                     <thead>
@@ -40,21 +54,32 @@
                         <th>Aksi</th>
                         </tr>
                     </thead>
+                    
                     <tbody>
+                    <?php
+                      while($result=mysqli_fetch_assoc($sql)){
+                    ?>
                         <tr>
-                            <td>1. </td>
-                            <td>112233</td>
-                            <td>Alexander Kurniwan</td>
-                            <td>Laki-laki</td>
+                            <td><?php echo ++$no;?></td>
+                            <td><?php echo $result ['nisn']; ?></td>
+                            <td><?php echo $result ['nama_siswa'];?></td>
+                            <td><?php echo $result ['jenis_kelamin'];?></td>
                             <td>
-                                <img src="img/img1.JPG" alt="img 1" style="width: 150px;">
+                                <img src="img/<?php echo $result ['foto_siswa']; ?>" alt="img 1" style="width: 150px;">
                             </td>
-                            <td>Jl. Kusuma Negara</td>
+                            <td><?php echo $result ['alamat'];?></td>
                             <td>
-                                <button type="button" class="btn btn-success btn-sm "><i class="fa fa-pencil"></i>Ubah</button>
-                                <button type="button" class="btn btn-danger btn-sm "><i class="fa fa-trash"></i>Hapus</button>
+                                <a href="kelola.php?ubah=1" type="button" class="btn btn-success btn-sm mb-3">
+                                  <i class="fa fa-pencil"></i>Ubah
+                              </a>
+                                <a href="proses.php?hapus=1" type="button" class="btn btn-danger btn-sm "><i class="fa fa-trash"></i>
+                                Hapus
+                              </a>
                             </td>
                         </tr>
+                        <?php
+                      }
+                        ?>
                     </tbody>
                 </table>
             </div>
